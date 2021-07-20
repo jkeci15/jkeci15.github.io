@@ -22,8 +22,8 @@ export const NavLink = styled(Link)`
   height: 100%;
   cursor: pointer;
   &.active {
-    color: red;
-  }
+   color: red;
+  } 
   font-size: 15px;
 `;
   

@@ -1,13 +1,20 @@
 import './Book.css'
+import Card from './Card'
 const Book = (props) => {
+    
+    const imgsrc = "data:image/jpg;base64," + props.bookCover
+    
     return (
 
-        <div className="wrapper">
+        <Card className="wrapper">
             <h2>{props.title}</h2>
-            <h3>Author: {props.author}</h3>
-            <p>Description: {props.description}</p>
-            <img className="image-tab" src={props.image} alt={props.title} />
-        </div>
+            <h3>By: {props.author}</h3>
+            <p><em> {props.description}</em></p>
+            <p>{props.image}</p>
+            <div className="image-div">
+                <img className="image-tab" src={imgsrc} alt={props.title} />
+            </div>
+        </Card>
 
     )
 }

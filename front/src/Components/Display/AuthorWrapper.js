@@ -1,8 +1,8 @@
-import React, { useState, useEffect,useCallback } from 'react'
+import React, {useState, useEffect, useCallback} from 'react'
 import Card from "../Card";
-import BookList from "./BookList"
+import AuthorList from "./AuthorList"
 import './BookWrapper.css'
-const BookWrapper = () => {
+const AuthorWrapper = () => {
 
     // const BOOKS = [
     //     {
@@ -11,7 +11,7 @@ const BookWrapper = () => {
     //         author: 'Hemingway',
     //         description: 'A book about human vs nature',
     //         categories: 'fan-fiction',
-    //         image: '../../../public/Images/old_man_and_sea.jpg'
+    //         image: '../public/Images/davinci_code.jpg'
     //     },
     //     {
     //         id: 2,
@@ -22,32 +22,28 @@ const BookWrapper = () => {
     //         image: './public/Images/davinci_code.jpg'
     //     }
     // ];
-   
-
-    const [books, setBooks] = useState([])
+    
+    const [authors, setAuthors] = useState([])
     const [isLoading, setisLoading] = useState(false)
     const [error, setError] = useState(null)
 
-    const fetchBooksHandler = useCallback( async() => {
+    const fetchAuthorsHandler = useCallback( async() => {
         setisLoading(true)
         setError(null)
         try {
-            const response = await fetch('/books')
+            const response = await fetch('/authors')
             if (!response.ok) {
                 throw new Error('Something went wrong')
             }
             const data = await response.json()
-            const transformedBooks = data.map((book) => {
+            const transformedAuthor = data.map((author) => {
                 return {
-                    id: book._id,
-                    title: book.name,
-                    description: book.description,
-                    bookCover: book.bookCover,
-                    author: book.author,
-                    categories: book.categories
+                    id: author._id,
+                    authorName: author.authorName,
+                    bio: author.bio
                 }
             })
-            setBooks(transformedBooks)
+            setAuthors(transformedAuthor)
         } catch (error) {
             setError(error.message)
         }
@@ -55,30 +51,29 @@ const BookWrapper = () => {
     },[])
 
     useEffect(()=>{
-        fetchBooksHandler();
-    },[fetchBooksHandler])
+        fetchAuthorsHandler();
+    },[fetchAuthorsHandler])
 
-    let bookContent = <p>Found no Books!</p>
-    if (books.length > 0) {
-        bookContent = <Card className="books">
-            <BookList books={books} />
-        </Card>
+    let authorContent = <p>Found no Books!</p>
+    if (authors.length > 0) {
+        authorContent = <Card className="books">
+        <AuthorList authors={authors} />
+    </Card>
     }
     if (error) {
-        bookContent = <p>{error}</p>
+        authorContent = <p>{error}</p>
     }
     if (isLoading) {
-        bookContent = <p>Loading....</p>
+        authorContent = <p>Loading....</p>
     }
-
     return (
         <div>
             <section>
-                {bookContent}
+                {authorContent}
             </section>
         </div>
 
     )
 }
 
-export default BookWrapper
+export default AuthorWrapper

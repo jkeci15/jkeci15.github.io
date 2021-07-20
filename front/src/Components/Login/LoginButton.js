@@ -1,13 +1,14 @@
 import React from 'react';
-
+import './LoginButton.css'
 const LoginButton = () => {
-    return(
-        <input
-            type="Submit"
-            value="Sign in"
-            onClick={() => alert("Ready to be signed in with email: AAAAA password: BBBB")}
-                
-            />
+    return (
+        <div>
+        <button className="login-button"
+                type="submit"
+                onClick={() => alert("Ready to be signed in with email: AAAAA password: BBBB")}
+
+            >Sign In</button>
+        </div>
     );
 }
 export default LoginButton;

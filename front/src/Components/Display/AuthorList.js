@@ -1,10 +1,16 @@
-const AuthorList = ()=>{
+import Author from "../Author"
+import './AuthorList.css'
+const AuthorList = (props)=>{
 
     return(
-        <div>
-            {/* <h1>List of authors displayed here</h1> */}
-            <h2>Authors</h2>
-        </div>
+        <ul className="book-list">
+            {props.authors.map((author) =>(
+                <Author key={author._id}
+                    authorName={author.authorName}
+                    bio={author.bio}
+                    />
+            ))}
+        </ul>
     )
 }
 export default AuthorList

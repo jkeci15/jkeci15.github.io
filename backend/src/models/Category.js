@@ -11,11 +11,11 @@ const categorySchema = mongoose.Schema({
     }
 })
 
-bookSchema.virtual('book',{
-    ref: 'Book',
-    localField: '_id',
-    foreignField: 'categories'
-})
+// categorySchema.virtual('book',{
+//     ref: 'Book',
+//     localField: '_id',
+//     foreignField: 'categories'
+// })
 
 const Category = mongoose.model('Category', categorySchema)
 module.exports = Category

@@ -13,23 +13,30 @@ const bookSchema = mongoose.Schema({
         trim: true
     },
 
-    image:{
-        data: Buffer,
-        contentType: String
+    bookCover:{
+        type: Buffer,
+        // contentType: String
     },
-
     author:{
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'Author'
+        type: String,
+        trim: true  
     },
+    categories:{
+        type: String,
+        trim: true  
+      },
+    // author:{
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     required: true,
+    //     ref: 'Author'
+    // },
 
-    categories:[
-        category:{
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'Category'
-    }]
+    // categories:[
+    //     {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     required: true,
+    //     ref: 'Category'
+    // }]
 })
 
 

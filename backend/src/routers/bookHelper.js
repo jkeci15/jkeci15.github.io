@@ -1,9 +1,11 @@
 const express = require('express')
-const Book = require('../models/Book.js')
+const multer = require('multer')
+const sharp = require('sharp')
+const Book = require('../models/Book')
 const router = new express.Router()
 
 // Get all books
-router.get('/', async (req,res)=>{
+router.get('/books', async (req,res)=>{
     try {
         const books = await Book.find({})
         res.send(books)
@@ -13,9 +15,11 @@ router.get('/', async (req,res)=>{
 })
 
 // Get book by id
-router.get('books/:id', async (req,res)=>{
+router.get('/books/:id', async (req,res)=>{
+    const _id = req.params.id
     try {
-        const book = await Book.findOne(req.params.id)
+        const book = await Book.findOne({_id})
+        // const book = await Book.findById(_id)
         if (!book) {
             res.status(404).send('No book found')
         }
@@ -23,6 +27,28 @@ router.get('books/:id', async (req,res)=>{
     } catch (error) {
         res.status(500).send()
     }
+})
+
+const upload = multer({
+    limits:{
+        fileSize:1000000
+    },
+    fileFilter(req, file, cb){
+        if(!file.originalname.match(/\.(jpg|jpeg|png)$/)){
+            return cb(new Error('Please upload jpg, png or jpeg files'))
+        }
+        cb(undefined, true)
+    }
+})
+// Add image to book
+router.post('/books/:id/cover', upload.single('upload'), async (req,res)=>{
+    const book = await Book.findOne({_id: req.params.id})
+    const buffer = await sharp(req.file.buffer).resize({width:100, height:100}).png().toBuffer()
+    book.bookCover = buffer
+    await book.save()
+    res.send()
+},(error, req, res, next) =>{
+    res.status(400).send({error: error.message})
 })
 
 // Create a book

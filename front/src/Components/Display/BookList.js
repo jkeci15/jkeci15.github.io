@@ -9,7 +9,7 @@ const BookList = (props)=>{
                     title={book.title}
                     author={book.author}
                     description={book.description}
-                    bookImage={book.image}
+                    bookCover={book.bookCover}
                     />
             ))}
         </ul>
