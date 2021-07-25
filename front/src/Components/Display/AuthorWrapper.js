@@ -4,25 +4,6 @@ import AuthorList from "./AuthorList"
 import './BookWrapper.css'
 const AuthorWrapper = () => {
 
-    // const BOOKS = [
-    //     {
-    //         id: 1,
-    //         title: 'Old man and the sea',
-    //         author: 'Hemingway',
-    //         description: 'A book about human vs nature',
-    //         categories: 'fan-fiction',
-    //         image: '../public/Images/davinci_code.jpg'
-    //     },
-    //     {
-    //         id: 2,
-    //         title: 'DaVinci Code',
-    //         author: 'Dan Brown',
-    //         description: 'Mystery Holy grail',
-    //         categories: 'fan-fiction',
-    //         image: './public/Images/davinci_code.jpg'
-    //     }
-    // ];
-    
     const [authors, setAuthors] = useState([])
     const [isLoading, setisLoading] = useState(false)
     const [error, setError] = useState(null)
@@ -39,7 +20,7 @@ const AuthorWrapper = () => {
             const transformedAuthor = data.map((author) => {
                 return {
                     id: author._id,
-                    authorName: author.authorName,
+                    name: author.name,
                     bio: author.bio
                 }
             })

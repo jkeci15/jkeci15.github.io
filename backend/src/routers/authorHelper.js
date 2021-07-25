@@ -36,43 +36,43 @@ router.post('/authors', async (req,res)=>{
     }
 })
 
-// // Update author
-// router.patch('/authors', async(req,res)=>{
-//     const updates = Object.keys(req.body)
-//     const allowedUpdates = [
-//         'name',
-//         'bio'
-//     ]
-//     const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
+// Update author
+router.patch('/authors', async(req,res)=>{
+    const updates = Object.keys(req.body)
+    const allowedUpdates = [
+        'name',
+        'bio'
+    ]
+    const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
     
-//     if (!isValidOperation) {
-//         return res.status(400).send({ error: 'Invalid updates' })
-//     }
+    if (!isValidOperation) {
+        return res.status(400).send({ error: 'Invalid updates' })
+    }
 
-//     try {
-//         const author = await Author.findOne({_id: req.params.id})
-//         if (!author) {
-//             return res.status(404).send()
-//         }
-//         updates.forEach((update) => author[update] = req.body[update])
-//         await author.save()
-//         res.send(author)
-//     } catch (error) {
-//        res.status(400).send(error) 
-//     }  
-// })
+    try {
+        const author = await Author.findOne({_id: req.params.id})
+        if (!author) {
+            return res.status(404).send()
+        }
+        updates.forEach((update) => author[update] = req.body[update])
+        await author.save()
+        res.send(author)
+    } catch (error) {
+       res.status(400).send(error) 
+    }  
+})
 
-// // Delete an author
-// router.delete('/authors/:id', async(req,res)=>{
-//  try {
-//         const author = await Author.findOneAndDelete({_id: req.params.id})
-//         if (!author) {
-//             return res.status(404).send()
-//         }
-//         res.send()
-//     } catch (error) {
-//         res.status(500).send()
-//     }
-// })
+// Delete an author
+router.delete('/authors/:id', async(req,res)=>{
+ try {
+        const author = await Author.findOneAndDelete({_id: req.params.id})
+        if (!author) {
+            return res.status(404).send()
+        }
+        res.send()
+    } catch (error) {
+        res.status(500).send()
+    }
+})
 
 module.exports = router

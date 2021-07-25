@@ -19,7 +19,6 @@ router.get('/books/:id', async (req,res)=>{
     const _id = req.params.id
     try {
         const book = await Book.findOne({_id})
-        // const book = await Book.findById(_id)
         if (!book) {
             res.status(404).send('No book found')
         }

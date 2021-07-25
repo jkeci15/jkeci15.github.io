@@ -1,0 +1,12 @@
+.wrapper{
+    text-align: center;
+    background-color: whitesmoke;
+}
+.h2 {
+    color: #3a3a3a;
+    font-size: 1rem;
+    flex: 1;
+    margin: 0 1rem;
+    color: white;
+    padding: 0.9rem;
+}

@@ -5,8 +5,8 @@ const AuthorList = (props)=>{
     return(
         <ul className="book-list">
             {props.authors.map((author) =>(
-                <Author key={author._id}
-                    authorName={author.authorName}
+                <Author key={author.name}
+                    name={author.name}
                     bio={author.bio}
                     />
             ))}

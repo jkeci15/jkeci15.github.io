@@ -1,9 +1,17 @@
 .wrapper{
     text-align: center;
     padding: 0;
+    margin: 0.5rem;
     background-color: whitesmoke;
 }
-
+.book-item{
+    display: flex;
+    justify-content: space-between;
+}
+.text-block{
+    flex-direction: column;
+    margin-left: 1rem;
+}
 .h2 {
     color: #3a3a3a;
     font-size: 1rem;
@@ -13,10 +21,11 @@
 }
 
 .image-tab {
-    width: 10.5rem;
-    height: 10.5rem;
+    width: 9.5rem;
+    height: 9.5rem;
     border: 1px solid #ececec;
     border-radius: 12px;
+    margin: 0.2rem;
 }
 
 .image-div{

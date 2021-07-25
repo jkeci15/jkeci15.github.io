@@ -1,15 +1,17 @@
 const mongoose = require('mongoose')
 
 // Author has bio and name
-const authorSchema = mongoose.Schema({
-    authorName:{
+const authorSchema = new mongoose.Schema({
+    name:{
         type: String,
         required: true,
         trim: true,
         unique: true
     },
+    
     bio:{
-        type: String
+        type: String,
+        trim: true
     }
 })
 

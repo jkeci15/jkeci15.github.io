@@ -1,11 +1,10 @@
 const mongoose = require('mongoose')
+const jwt = require('jsonwebtoken')
+const bcrypt = require('bcryptjs')
+const validator = require('validator')
 
-const adminSchema = mongoose.Schema({
-    name:{
-        type: String,
-        required: true,
-        trim: true
-    },
+
+const adminSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true,
@@ -38,41 +37,42 @@ const adminSchema = mongoose.Schema({
 })
 
 adminSchema.methods.toJSON = function (){
-    const user = this
-    const userObject = user.toObject()
-    delete userObject.password
-    delete userObject.tokens
+    const admin = this
+    const adminObject = admin.toObject()
+    delete adminObject.password
+    delete adminObject.tokens
 
-    return userObject
+    return adminObject
 }
 
 adminSchema.methods.generateAuthToken = async function () {
-    const user = this
-    const token = jwt.sign({ _id: user._id.toString() }, 'thisismynewcourse')
-    user.tokens = user.tokens.concat({ token })
-    await user.save()
+    const admin = this
+    // see how to set as env variable
+    const token = jwt.sign({ _id: admin._id.toString() }, 'thisismynewcourse', {expiresIn: '7 days'})
+    admin.tokens = admin.tokens.concat({ token })
+    await admin.save()
 
     return token
 }
 
 adminSchema.statics.findByCredentials = async (email, password) => {
-    const user = await User.findOne({ email })
-    if (!user) {
+    const admin = await Admin.findOne({ email })
+    if (!admin) {
         throw new Error('Unable to login')
     }
-    const isMatch = await bcrypt.compare(password, user.password)
+    const isMatch = await bcrypt.compare(password, admin.password)
     if (!isMatch) {
         throw new Error('Unable to login')
     }
 
-    return user
+    return admin
 }
 
 // hash plain password
 adminSchema.pre('save', async function (next) {
-    const user = this
-    if (user.isModified('password')) {
-        user.password = await bcrypt.hash(user.password, 8)
+    const admin = this
+    if (admin.isModified('password')) {
+        admin.password = await bcrypt.hash(admin.password, 8)
     }
     next()
 })

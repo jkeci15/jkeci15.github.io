@@ -2,12 +2,13 @@ const mongoose = require('mongoose')
 
 // Categories have only name stored
 
-const categorySchema = mongoose.Schema({
+const categorySchema = new mongoose.Schema({
 
     name:{
         type: String,
         required: true,
-        trim: true
+        trim: true,
+        unique: true
     }
 })
 

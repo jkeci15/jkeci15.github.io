@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 // Book has id, name, description, and image.
 // It has one author and many categories
-const bookSchema = mongoose.Schema({
+const bookSchema = new mongoose.Schema({
     name:{
         type: String,
         required: true,
@@ -14,8 +14,7 @@ const bookSchema = mongoose.Schema({
     },
 
     bookCover:{
-        type: Buffer,
-        // contentType: String
+        type: Buffer
     },
     author:{
         type: String,
@@ -39,6 +38,12 @@ const bookSchema = mongoose.Schema({
     // }]
 })
 
+// bookSchema.methods.toJSON = function (){
+//     const book = this
+//     const bookObject = book.toObject()
+//     delete bookObject.bookCover
 
+//     return bookObject
+// }
 const Book = mongoose.model('Book', bookSchema)
 module.exports = Book

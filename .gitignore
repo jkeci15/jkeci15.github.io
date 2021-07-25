@@ -6,6 +6,7 @@
 .pnp.js
 /backend/node_modules
 /front/node_modules
+/front/web-library
 # testing
 /coverage
 

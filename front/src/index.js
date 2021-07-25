@@ -3,11 +3,17 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { AuthContextProvider } from './store/auth-context';
+import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <AuthContextProvider>
+    {/* <React.StrictMode> */}
+    <BrowserRouter>
+      <App />
+      </BrowserRouter>
+    {/* </React.StrictMode> */}
+  </AuthContextProvider>,
   document.getElementById('root')
 );
 
