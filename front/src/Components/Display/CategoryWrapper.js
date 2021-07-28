@@ -1,4 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+import AuthContext from '../../store/auth-context'
+import CategoryContext from '../../store/category-context'
 import Card from "../Card"
 import CategoryList from "./CategoryList"
 import './CategoryWrapper.css'
@@ -7,6 +10,9 @@ const CategoryWrapper = () => {
     const [categories, setCategories] = useState([])
     const [isLoading, setisLoading] = useState(false)
     const [error, setError] = useState(null)
+    const authCtx = useContext(AuthContext)
+    const isLoggedIn = authCtx.isLoggedIn
+    const categoryCtx = useContext(CategoryContext)
 
     const fetchCategoriesHandler = useCallback(async () => {
         setisLoading(true)
@@ -24,35 +30,45 @@ const CategoryWrapper = () => {
                 }
             })
             setCategories(transformedCategory)
+            categoryCtx.setHasChanged(false)
         } catch (error) {
             setError(error.message)
         }
         setisLoading(false)
-    },[])
+    }, [categoryCtx])
 
-    useEffect(()=>{
+    useEffect(() => {
         fetchCategoriesHandler()
-    },[fetchCategoriesHandler])
+    }, [fetchCategoriesHandler, categoryCtx.hasChanged])
 
-    let catContent = <p>No categories found!</p>
+    const getCategoryContent = useCallback((categories) => {
+        if (error) {
+            return <p>{error}</p>
+        }
+        if (isLoading) {
+            return <p>Loading....</p>
+        }
+        if (categories.length > 0) {
+            return <CategoryList categories={categories} />
+        }
+        else {
+            return <p>Found no Categories!</p>
+        }
+    }, [error, isLoading])
 
-    if(categories.length > 0) {
-        catContent = <Card className="categories">
-            <CategoryList categories={categories}/>
+    const [categoryContent, setCategoryContent] = useState(getCategoryContent(categories));
+    useEffect(() => {
+        setCategoryContent(getCategoryContent(categories))
+    }, [getCategoryContent, categories])
+
+
+    return (
+        <section>
+        <Card className="categories">
+            {isLoggedIn ? <Link to='/newCategory' className="createButton">Add Category</Link> : ""}
+            {categoryContent}
         </Card>
-    }
-    if (error) {
-        catContent = <p>Loading....</p>
-    }
-    if (isLoading) {
-        catContent = <p>Loading....</p>
-    }
-    return(
-        <div>
-            <section>
-                {catContent}
-            </section>
-        </div>
+        </section>
     )
 }
 

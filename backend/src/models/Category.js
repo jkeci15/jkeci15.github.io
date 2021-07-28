@@ -9,14 +9,16 @@ const categorySchema = new mongoose.Schema({
         required: true,
         trim: true,
         unique: true
-    }
+    },
+    books: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Book'
+        }
+    ]
 })
 
-// categorySchema.virtual('book',{
-//     ref: 'Book',
-//     localField: '_id',
-//     foreignField: 'categories'
-// })
+
 
 const Category = mongoose.model('Category', categorySchema)
 module.exports = Category

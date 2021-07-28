@@ -15,11 +15,11 @@ const authorSchema = new mongoose.Schema({
     }
 })
 
-// authorSchema.virtual('book',{
-//     ref: 'Book',
-//     localField: '_id',
-//     foreignField: 'author'
-// })
+authorSchema.virtual('book',{
+    ref: 'Book',
+    localField: '_id',
+    foreignField: 'author'
+})
 
 const Author = mongoose.model('Author', authorSchema)
 module.exports = Author

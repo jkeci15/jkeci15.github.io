@@ -2,6 +2,7 @@ const express = require('express')
 const multer = require('multer')
 const sharp = require('sharp')
 const Book = require('../models/Book')
+const Category = require('../models/Category')
 const router = new express.Router()
 
 // Get all books
@@ -54,15 +55,21 @@ router.post('/books/:id/cover', upload.single('upload'), async (req,res)=>{
 router.post('/books', async (req,res)=>{
     const book = new Book(req.body)
     try {
+        const buffer = await sharp(req.body.bookCover).resize({width:100, height:100}).png()
+        book.bookCover = buffer
         await book.save()
+        req.body.categories.forEach(async (category) => {
+            await Category.findAndUpdate({_id: category.id}, {$push: {books: req.body.id}})
+        });
         res.status(201).send(book)
     } catch (error) {
         res.status(400).send()
     }
-})
+},(error, req, res, next) =>{
+    res.status(400).send({error: error.message})})
 
 // Update a book
-router.patch('/books', async (req,res)=>{
+router.patch('/books/:id', async (req,res)=>{
     const updates = Object.keys(req.body)
     const allowedUpdates = [
         'name',

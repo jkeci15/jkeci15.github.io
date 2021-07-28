@@ -1,0 +1,16 @@
+.checkBoxContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.checkBoxOptionContainer{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    width: 40%;
+}
+
+.checkBoxContainer input{
+    flex: 0 1 15%;
+}

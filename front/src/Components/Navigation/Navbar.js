@@ -1,22 +1,22 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import AuthContext from '../../store/auth-context';
 import {
-  Nav,
-  NavLink,
-  NavMenu,
-  NavBtn,
-  NavBtnLink,
+    Nav,
+    NavLink,
+    NavMenu,
+    NavBtn,
+    NavBtnLink,
 } from './NavbarElements';
 
-const Navbar = () =>{
+const Navbar = () => {
     const authCtx = useContext(AuthContext)
     const isLoggedIn = authCtx.isLoggedIn
 
-    return(
+    return (
         <>
             <Nav>
                 <NavMenu >
-                    <NavLink to='/'>
+                    <NavLink to='/books'>
                         Books
                     </NavLink>
                     <NavLink to='/authors'>
@@ -26,12 +26,10 @@ const Navbar = () =>{
                         Categories
                     </NavLink>
                 </NavMenu>
-                <NavBtn>
-                    {!isLoggedIn && (<NavBtnLink to='/signin'>Admin Sign In</NavBtnLink>)}
-                    {isLoggedIn && (<NavBtnLink to='/logout'>Logout</NavBtnLink>)}
-                </NavBtn>
+                {!isLoggedIn && (<NavBtnLink to='/signin'>Admin Sign In</NavBtnLink>)}
+                {isLoggedIn && (<NavBtn onClick={authCtx.logout}>Logout</NavBtn>)}
             </Nav>
-            </>
+        </>
     );
 };
 

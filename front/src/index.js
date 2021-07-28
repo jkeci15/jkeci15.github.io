@@ -5,14 +5,21 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { AuthContextProvider } from './store/auth-context';
 import { BrowserRouter } from 'react-router-dom';
+import { BookContextProvider } from './store/book-context';
+import { AuthorContextProvider } from './store/author-context';
+import { CategoryContextProvider } from './store/category-context';
 
 ReactDOM.render(
   <AuthContextProvider>
-    {/* <React.StrictMode> */}
-    <BrowserRouter>
-      <App />
-      </BrowserRouter>
-    {/* </React.StrictMode> */}
+    <BookContextProvider>
+      <AuthorContextProvider>
+        <CategoryContextProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </CategoryContextProvider>
+      </AuthorContextProvider>
+    </BookContextProvider>
   </AuthContextProvider>,
   document.getElementById('root')
 );

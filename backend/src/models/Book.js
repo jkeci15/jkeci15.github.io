@@ -17,33 +17,17 @@ const bookSchema = new mongoose.Schema({
         type: Buffer
     },
     author:{
-        type: String,
-        trim: true  
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'Author'
     },
-    categories:{
-        type: String,
-        trim: true  
-      },
-    // author:{
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     required: true,
-    //     ref: 'Author'
-    // },
-
-    // categories:[
-    //     {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     required: true,
-    //     ref: 'Category'
-    // }]
+    categories:[
+        {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'Category'
+    }]
 })
 
-// bookSchema.methods.toJSON = function (){
-//     const book = this
-//     const bookObject = book.toObject()
-//     delete bookObject.bookCover
-
-//     return bookObject
-// }
 const Book = mongoose.model('Book', bookSchema)
 module.exports = Book

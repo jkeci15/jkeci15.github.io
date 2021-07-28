@@ -50,5 +50,4 @@ router.post('/admin/logoutAll', auth, async (req,res)=>{
         res.status(500).send()
     }
 })
-// 12345678
 module.exports = router

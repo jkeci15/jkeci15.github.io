@@ -8,6 +8,7 @@ const CategoryList = (props)=>{
             {props.categories.map((category) =>(
                 <Category key={category.id}
                     title={category.title}
+                    id={category.id}
                     />
             ))}
         </ul>

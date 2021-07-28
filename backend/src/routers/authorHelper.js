@@ -37,7 +37,7 @@ router.post('/authors', async (req,res)=>{
 })
 
 // Update author
-router.patch('/authors', async(req,res)=>{
+router.patch('/authors/:id', async(req,res)=>{
     const updates = Object.keys(req.body)
     const allowedUpdates = [
         'name',

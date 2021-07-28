@@ -1,4 +1,5 @@
 import React, { useState, useRef, useContext } from 'react'
+import {useHistory} from 'react-router-dom'
 import AuthContext from '../../store/auth-context';
 import './LoginForm.css'
 const axios = require('axios')
@@ -10,7 +11,8 @@ const LoginForm = () => {
     };
     const emailInputRef = useRef();
     const passwordInputRef = useRef()
-
+    
+    const history = useHistory()
     const AuthCtx = useContext(AuthContext)
 
     const sendRequest = async (operationName, payload) => {
@@ -31,12 +33,12 @@ const LoginForm = () => {
             let responseOK = response && response.status === 200 && response.statusText === 'OK';
             if (responseOK) {
                 let data = await response.data;
-                // do something with data
-                console.log(data);
+                AuthCtx.login(data.token)
+                history.replace('/books')
             }
         }
         catch (e) {
-            console.log('error');
+            alert('Authentication failed')
         }
 
     }
@@ -87,10 +89,10 @@ const LoginForm = () => {
 
                 </div>
                 <div className="actions">
-                    <button> {isLogin ? 'Login' : 'Create Account'}</button>
+                    <button className="loginFormButton"> {isLogin ? 'Login' : 'Create Account'}</button>
                     <button
                         type="submit"
-                        className="toggle"
+                        className="toggle loginFormButton"
                         onClick={switchAuthModeHandler}
 
                     >{isLogin ? 'Create new account' : 'Login with existing account'}

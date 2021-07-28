@@ -5,3 +5,16 @@
     max-width: 95%;
     background-color: #4b5364;
   }
+
+  .createButton {
+    text-align: center;
+    font: inherit;
+    background-color: rgb(89, 124, 35);
+    border: 1px solid rgb(53, 145, 53);
+    border-radius: 4px;
+    padding: 0.5rem;
+    color: white;
+    margin: 0.6rem;
+    width: 15%;
+    text-decoration: none;
+}
